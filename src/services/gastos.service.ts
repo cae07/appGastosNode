@@ -113,7 +113,7 @@ export class GastoService {
       GastosValidator.validateAll(data, true);
 
       const gasto = await GastoModel.findByIdAndUpdate(id, data, {
-        new: true,
+        returnDocument: 'after',
         runValidators: true,
       }).exec();
 

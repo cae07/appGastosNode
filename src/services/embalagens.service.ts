@@ -106,7 +106,7 @@ export class EmbalagemService {
       }
 
       const embalagem = await EmbalagemModel.findByIdAndUpdate(id, data, {
-        new: true,
+        returnDocument: 'after',
         runValidators: true,
       }).exec();
 

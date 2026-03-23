@@ -27,6 +27,6 @@ const tiposProdutoSchema = new Schema<ITiposProduto>(
 tiposProdutoSchema.index({ ativa: 1 });
 
 export const TiposProdutoModel = model<ITiposProduto>(
-  'TiposProduto',
+  'TiposDeProduto',
   tiposProdutoSchema
 );
