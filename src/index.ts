@@ -1,5 +1,6 @@
 import express, { Express } from 'express';
 import { connectToDatabase } from './utils/api';
+import embalagenRoutes from './routes/embalagens.routes';
 
 const app: Express = express();
 const PORT = process.env.PORT || 3000;
@@ -12,6 +13,7 @@ app.use(express.urlencoded({ extended: true }));
 await connectToDatabase();
 
 // Rotas
+app.use('/embalagens', embalagenRoutes);
 
 // Rota de saúde
 app.get('/health', (_req, res) => {
