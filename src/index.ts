@@ -5,13 +5,13 @@ import { connectToDatabase } from './utils/api';
 
 // Carregar variáveis de ambiente do arquivo .env
 dotenv.config();
-import embalagenRoutes from './routes/embalagens.routes';
-import gastosRoutes from './routes/gastos.routes';
-import lancamentosRoutes from './routes/lancamentos.routes';
-import medidasRoutes from './routes/medidas.routes';
-import productsRoutes from './routes/products.routes';
-import tiposDeGastosRoutes from './routes/tiposDeGastos.routes';
-import tiposProdutoRoutes from './routes/tiposProduto.routes';
+import embalagenRoutes from './routes/embalagens.routes.js';
+import gastosRoutes from './routes/gastos.routes.js';
+import lancamentosRoutes from './routes/lancamentos.routes.js';
+import medidasRoutes from './routes/medidas.routes.js';
+import productsRoutes from './routes/products.routes.js';
+import tiposDeGastosRoutes from './routes/tiposDeGastos.routes.js';
+import tiposProdutoRoutes from './routes/tiposProduto.routes.js';
 
 export const app: Express = express();
 const PORT = process.env.PORT || 3001;
