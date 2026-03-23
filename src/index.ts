@@ -4,6 +4,7 @@ import embalagenRoutes from './routes/embalagens.routes';
 import gastosRoutes from './routes/gastos.routes';
 import lancamentosRoutes from './routes/lancamentos.routes';
 import medidasRoutes from './routes/medidas.routes';
+import productsRoutes from './routes/products.routes';
 
 export const app: Express = express();
 const PORT = process.env.PORT || 3000;
@@ -39,6 +40,7 @@ app.use('/embalagens', embalagenRoutes);
 app.use('/gastos', gastosRoutes);
 app.use('/lancamentos', lancamentosRoutes);
 app.use('/medidas', medidasRoutes);
+app.use('/products', productsRoutes);
 
 // Rota de saúde
 app.get('/health', (_req, res) => {
@@ -59,7 +61,8 @@ app.get('/', (_req, res) => {
       embalagens: '/embalagens',
       gastos: '/gastos',
       lancamentos: '/lancamentos',
-      medidas: '/medidas'
+      medidas: '/medidas',
+      products: '/products'
     }
   });
 });
