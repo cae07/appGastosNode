@@ -4,6 +4,7 @@ import { ILancamento } from '../types/lancamentos.types';
 import { IMedida } from '../types/medidas.types';
 import { IProduct } from '../types/products.types';
 import { ITiposDeGastos } from '../types/tiposDeGastos.types';
+import { ITiposProduto } from '../types/tiposProduto.types';
 
 /**
  * Transforma o documento do Mongoose em um objeto para resposta no cliente
@@ -167,4 +168,28 @@ export function tiposDeGastosToClient(doc: ITiposDeGastos | null): Record<string
  */
 export function tiposDeGastosToClientArray(docs: ITiposDeGastos[]): Record<string, any>[] {
   return docs.map(doc => tiposDeGastosToClient(doc)!);
+}
+
+/**
+ * Transforma o documento TiposProduto do Mongoose em um objeto para resposta no cliente
+ */
+export function tiposProdutoToClient(doc: ITiposProduto | null): Record<string, any> | null {
+  if (!doc) return null;
+
+  return {
+    _id: doc._id.toString(),
+    nome: doc.nome,
+    descricao: doc.descricao,
+    ativa: doc.ativa,
+    createdAt: doc.createdAt.toISOString(),
+    updatedAt: doc.updatedAt.toISOString(),
+    __v: doc.__v,
+  };
+}
+
+/**
+ * Transforma array de documentos do Mongoose (TiposProduto)
+ */
+export function tiposProdutoToClientArray(docs: ITiposProduto[]): Record<string, any>[] {
+  return docs.map(doc => tiposProdutoToClient(doc)!);
 }
