@@ -3,6 +3,7 @@ import { connectToDatabase } from './utils/api';
 import embalagenRoutes from './routes/embalagens.routes';
 import gastosRoutes from './routes/gastos.routes';
 import lancamentosRoutes from './routes/lancamentos.routes';
+import medidasRoutes from './routes/medidas.routes';
 
 export const app: Express = express();
 const PORT = process.env.PORT || 3000;
@@ -37,6 +38,7 @@ app.use(async (req, res, next) => {
 app.use('/embalagens', embalagenRoutes);
 app.use('/gastos', gastosRoutes);
 app.use('/lancamentos', lancamentosRoutes);
+app.use('/medidas', medidasRoutes);
 
 // Rota de saúde
 app.get('/health', (_req, res) => {
@@ -56,7 +58,8 @@ app.get('/', (_req, res) => {
       health: '/health',
       embalagens: '/embalagens',
       gastos: '/gastos',
-      lancamentos: '/lancamentos'
+      lancamentos: '/lancamentos',
+      medidas: '/medidas'
     }
   });
 });
