@@ -5,13 +5,6 @@
   "env": {
     "NODE_ENV": "production"
   },
-  "functions": {
-    "src/api/**/*.ts": {
-      "runtime": "nodejs20",
-      "memory": 512,
-      "maxDuration": 30
-    }
-  },
   "rewrites": [
     {
       "source": "/(.*)",
