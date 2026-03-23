@@ -2,6 +2,7 @@ import { IEmbalagem } from '../types/embalagens.types';
 import { IGasto } from '../types/gastos.types';
 import { ILancamento } from '../types/lancamentos.types';
 import { IMedida } from '../types/medidas.types';
+import { IProduct } from '../types/products.types';
 
 /**
  * Transforma o documento do Mongoose em um objeto para resposta no cliente
@@ -114,4 +115,31 @@ export function medidaToClient(doc: IMedida | null): Record<string, any> | null 
  */
 export function medidasToClientArray(docs: IMedida[]): Record<string, any>[] {
   return docs.map(doc => medidaToClient(doc)!);
+}
+
+/**
+ * Transforma o documento Product do Mongoose em um objeto para resposta no cliente
+ */
+export function productToClient(doc: IProduct | null): Record<string, any> | null {
+  if (!doc) return null;
+
+  return {
+    _id: doc._id.toString(),
+    name: doc.name,
+    measure: doc.measure,
+    medidaId: doc.medidaId,
+    productType: doc.productType,
+    tipoProdutoId: doc.tipoProdutoId,
+    embalagemId: doc.embalagemId,
+    createdAt: doc.createdAt.toISOString(),
+    updatedAt: doc.updatedAt.toISOString(),
+    __v: doc.__v,
+  };
+}
+
+/**
+ * Transforma array de documentos do Mongoose (Products)
+ */
+export function productsToClientArray(docs: IProduct[]): Record<string, any>[] {
+  return docs.map(doc => productToClient(doc)!);
 }
