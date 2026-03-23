@@ -1,7 +1,7 @@
 import dotenv from 'dotenv';
 import express, { Express } from 'express';
 import cors from 'cors';
-import { connectToDatabase } from './utils/api';
+import { connectToDatabase } from './utils/api.js';
 
 // Carregar variáveis de ambiente do arquivo .env
 dotenv.config();
