@@ -5,6 +5,7 @@ import gastosRoutes from './routes/gastos.routes';
 import lancamentosRoutes from './routes/lancamentos.routes';
 import medidasRoutes from './routes/medidas.routes';
 import productsRoutes from './routes/products.routes';
+import tiposDeGastosRoutes from './routes/tiposDeGastos.routes';
 
 export const app: Express = express();
 const PORT = process.env.PORT || 3000;
@@ -41,6 +42,7 @@ app.use('/gastos', gastosRoutes);
 app.use('/lancamentos', lancamentosRoutes);
 app.use('/medidas', medidasRoutes);
 app.use('/products', productsRoutes);
+app.use('/tiposDeGastos', tiposDeGastosRoutes);
 
 // Rota de saúde
 app.get('/health', (_req, res) => {
@@ -62,7 +64,8 @@ app.get('/', (_req, res) => {
       gastos: '/gastos',
       lancamentos: '/lancamentos',
       medidas: '/medidas',
-      products: '/products'
+      products: '/products',
+      tiposDeGastos: '/tiposDeGastos'
     }
   });
 });
