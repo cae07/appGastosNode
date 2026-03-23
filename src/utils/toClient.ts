@@ -1,4 +1,5 @@
 import { IEmbalagem } from '../types/embalagens.types';
+import { IGasto } from '../types/gastos.types';
 
 /**
  * Transforma o documento do Mongoose em um objeto para resposta no cliente
@@ -18,8 +19,42 @@ export function embalagemToClient(doc: IEmbalagem | null): Record<string, any> |
 }
 
 /**
- * Transforma array de documentos do Mongoose
+ * Transforma array de documentos do Mongoose (Embalagens)
  */
 export function embalagenToClientArray(docs: IEmbalagem[]): Record<string, any>[] {
   return docs.map(doc => embalagemToClient(doc)!);
+}
+
+/**
+ * Transforma o documento Gasto do Mongoose em um objeto para resposta no cliente
+ */
+export function gastoToClient(doc: IGasto | null): Record<string, any> | null {
+  if (!doc) return null;
+
+  const response: Record<string, any> = {
+    _id: doc._id.toString(),
+    descricao: doc.descricao,
+    valor: doc.valor,
+    tipoGastoId: doc.tipoGastoId,
+    createdAt: doc.createdAt.toISOString(),
+    updatedAt: doc.updatedAt.toISOString(),
+    __v: doc.__v,
+  };
+
+  // Adicionar campos opcionais se existirem
+  if (doc.ano !== undefined) {
+    response.ano = doc.ano;
+  }
+  if (doc.mes !== undefined) {
+    response.mes = doc.mes;
+  }
+
+  return response;
+}
+
+/**
+ * Transforma array de documentos do Mongoose (Gastos)
+ */
+export function gastosToClientArray(docs: IGasto[]): Record<string, any>[] {
+  return docs.map(doc => gastoToClient(doc)!);
 }
