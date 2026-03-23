@@ -1,4 +1,5 @@
 import express, { Express } from 'express';
+import { connectToDatabase } from './utils/api';
 
 const app: Express = express();
 const PORT = process.env.PORT || 3000;
@@ -6,6 +7,9 @@ const PORT = process.env.PORT || 3000;
 // Middleware
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+
+// conecta ao banco
+await connectToDatabase();
 
 // Rotas
 
