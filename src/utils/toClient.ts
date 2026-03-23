@@ -1,6 +1,7 @@
 import { IEmbalagem } from '../types/embalagens.types';
 import { IGasto } from '../types/gastos.types';
 import { ILancamento } from '../types/lancamentos.types';
+import { IMedida } from '../types/medidas.types';
 
 /**
  * Transforma o documento do Mongoose em um objeto para resposta no cliente
@@ -89,4 +90,28 @@ export function lancamentoToClient(doc: ILancamento | null): Record<string, any>
  */
 export function lancamentosToClientArray(docs: ILancamento[]): Record<string, any>[] {
   return docs.map(doc => lancamentoToClient(doc)!);
+}
+
+/**
+ * Transforma o documento Medida do Mongoose em um objeto para resposta no cliente
+ */
+export function medidaToClient(doc: IMedida | null): Record<string, any> | null {
+  if (!doc) return null;
+
+  return {
+    _id: doc._id.toString(),
+    nome: doc.nome,
+    sigla: doc.sigla,
+    ativa: doc.ativa,
+    createdAt: doc.createdAt.toISOString(),
+    updatedAt: doc.updatedAt.toISOString(),
+    __v: doc.__v,
+  };
+}
+
+/**
+ * Transforma array de documentos do Mongoose (Medidas)
+ */
+export function medidasToClientArray(docs: IMedida[]): Record<string, any>[] {
+  return docs.map(doc => medidaToClient(doc)!);
 }
