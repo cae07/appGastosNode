@@ -14,12 +14,11 @@ export function embalagemToClient(doc: IEmbalagem | null): Record<string, any> |
   if (!doc) return null;
 
   return {
-    _id: doc._id.toString(),
+    id: doc._id.toString(),
     quantidade: doc.quantidade,
     ativa: doc.ativa,
     createdAt: doc.createdAt.toISOString(),
     updatedAt: doc.updatedAt.toISOString(),
-    __v: doc.__v,
   };
 }
 
@@ -37,13 +36,12 @@ export function gastoToClient(doc: IGasto | null): Record<string, any> | null {
   if (!doc) return null;
 
   const response: Record<string, any> = {
-    _id: doc._id.toString(),
+    id: doc._id.toString(),
     descricao: doc.descricao,
     valor: doc.valor,
     tipoGastoId: doc.tipoGastoId,
     createdAt: doc.createdAt.toISOString(),
     updatedAt: doc.updatedAt.toISOString(),
-    __v: doc.__v,
   };
 
   // Adicionar campos opcionais se existirem
@@ -71,7 +69,7 @@ export function lancamentoToClient(doc: ILancamento | null): Record<string, any>
   if (!doc) return null;
 
   return {
-    _id: doc._id.toString(),
+    id: doc._id.toString(),
     produtoName: doc.produtoName,
     quantity: doc.quantity,
     value: doc.value,
@@ -83,8 +81,7 @@ export function lancamentoToClient(doc: ILancamento | null): Record<string, any>
     medidaId: doc.medidaId,
     tipoProdutoId: doc.tipoProdutoId,
     createdAt: doc.createdAt.toISOString(),
-    updatedAt: doc.updatedAt.toISOString(),
-    __v: doc.__v,
+    updatedAt: doc.updatedAt.toISOString()
   };
 }
 
@@ -102,13 +99,12 @@ export function medidaToClient(doc: IMedida | null): Record<string, any> | null 
   if (!doc) return null;
 
   return {
-    _id: doc._id.toString(),
+    id: doc._id.toString(),
     nome: doc.nome,
     sigla: doc.sigla,
     ativa: doc.ativa,
     createdAt: doc.createdAt.toISOString(),
-    updatedAt: doc.updatedAt.toISOString(),
-    __v: doc.__v,
+    updatedAt: doc.updatedAt.toISOString()
   };
 }
 
@@ -126,7 +122,7 @@ export function productToClient(doc: IProduct | null): Record<string, any> | nul
   if (!doc) return null;
 
   return {
-    _id: doc._id.toString(),
+    id: doc._id.toString(),
     name: doc.name,
     measure: doc.measure,
     medidaId: doc.medidaId,
@@ -134,8 +130,7 @@ export function productToClient(doc: IProduct | null): Record<string, any> | nul
     tipoProdutoId: doc.tipoProdutoId,
     embalagemId: doc.embalagemId,
     createdAt: doc.createdAt.toISOString(),
-    updatedAt: doc.updatedAt.toISOString(),
-    __v: doc.__v,
+    updatedAt: doc.updatedAt.toISOString()
   };
 }
 
@@ -153,13 +148,12 @@ export function tiposDeGastosToClient(doc: ITiposDeGastos | null): Record<string
   if (!doc) return null;
 
   return {
-    _id: doc._id.toString(),
+    id: doc._id.toString(),
     nome: doc.nome,
     descricao: doc.descricao,
     ativa: doc.ativa,
     createdAt: doc.createdAt.toISOString(),
-    updatedAt: doc.updatedAt.toISOString(),
-    __v: doc.__v,
+    updatedAt: doc.updatedAt.toISOString()
   };
 }
 
@@ -177,13 +171,12 @@ export function tiposProdutoToClient(doc: ITiposProduto | null): Record<string, 
   if (!doc) return null;
 
   return {
-    _id: doc._id.toString(),
+    id: doc._id.toString(),
     nome: doc.nome,
     descricao: doc.descricao,
     ativa: doc.ativa,
     createdAt: doc.createdAt.toISOString(),
-    updatedAt: doc.updatedAt.toISOString(),
-    __v: doc.__v,
+    updatedAt: doc.updatedAt.toISOString()
   };
 }
 

@@ -5,7 +5,6 @@
   "description": "backend de tema empreendedorismo em sc",
   "main": "dist/index.js",
   "scripts": {
-    "server:db": "json-server --watch db.json --port 4000",
     "dev": "tsx watch src/index.ts",
     "build": "tsc",
     "start": "node dist/index.js",
@@ -15,10 +14,13 @@
   "author": "Caê Calçolari",
   "license": "ISC",
   "dependencies": {
+    "cors": "^2.8.6",
+    "dotenv": "^17.3.1",
     "express": "^5.2.1",
     "mongoose": "^9.3.1"
   },
   "devDependencies": {
+    "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
     "@types/jest": "^30.0.0",
     "@types/mongoose": "^5.11.96",

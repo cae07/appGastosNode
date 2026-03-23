@@ -153,7 +153,7 @@ export class LancamentoService {
       LancamentosValidator.validateAll(data, true);
 
       const lancamento = await LancamentoModel.findByIdAndUpdate(id, data, {
-        new: true,
+        returnDocument: 'after',
         runValidators: true,
       }).exec();
 
