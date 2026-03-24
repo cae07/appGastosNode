@@ -1,79 +1,12 @@
-import { BadRequestException } from '../utils/errorHandler.js';
+import { BaseValidator } from './base.validator.js';
 import { CreateLancamentoDTO, UpdateLancamentoDTO, LancamentoFilters } from '../types/lancamentos.types.js';
 
 /**
- * Validador de Lançamentos com regras complexas
+ * Validador de Lançamentos
+ * Herda métodos genéricos de BaseValidator
  * Diferencia entre criação (campos obrigatórios) e atualização (campos opcionais)
  */
-export class LancamentosValidator {
-  /**
-   * Valida string obrigatória
-   */
-  private static validateRequiredString(
-    value: unknown,
-    fieldName: string,
-    minLength: number = 1
-  ): void {
-    if (value === undefined || value === null || value === '') {
-      throw new BadRequestException(`${fieldName} é obrigatório`);
-    }
-
-    if (typeof value !== 'string') {
-      throw new BadRequestException(`${fieldName} deve ser uma string`);
-    }
-
-    const trimmed = value.trim();
-    if (trimmed === '') {
-      throw new BadRequestException(`${fieldName} não pode estar vazio`);
-    }
-
-    if (trimmed.length < minLength) {
-      throw new BadRequestException(
-        `${fieldName} deve ter no mínimo ${minLength} caracteres`
-      );
-    }
-  }
-
-  /**
-   * Valida número obrigatório
-   */
-  private static validateRequiredNumber(value: unknown, fieldName: string): void {
-    if (value === undefined || value === null) {
-      throw new BadRequestException(`${fieldName} é obrigatório`);
-    }
-
-    if (typeof value !== 'number' || isNaN(value)) {
-      throw new BadRequestException(`${fieldName} deve ser um número`);
-    }
-  }
-
-  /**
-   * Valida número positivo
-   */
-  private static validatePositiveNumber(
-    value: number,
-    fieldName: string
-  ): void {
-    if (value <= 0) {
-      throw new BadRequestException(`${fieldName} deve ser maior que zero`);
-    }
-  }
-
-  /**
-   * Valida intervalo de números
-   */
-  private static validateNumberRange(
-    value: number,
-    fieldName: string,
-    min: number,
-    max: number
-  ): void {
-    if (value < min || value > max) {
-      throw new BadRequestException(
-        `${fieldName} deve estar entre ${min} e ${max}`
-      );
-    }
-  }
+export class LancamentosValidator extends BaseValidator {
 
   /**
    * Valida ano
@@ -83,7 +16,7 @@ export class LancamentosValidator {
       this.validateRequiredNumber(value, 'O ano');
       this.validateNumberRange(value as number, 'O ano', 1900, 2100);
     } else if (value !== undefined && value !== null) {
-      this.validateRequiredNumber(value, 'O ano');
+      this.validateOptionalNumber(value, 'O ano');
       this.validateNumberRange(value as number, 'O ano', 1900, 2100);
     }
   }
@@ -96,7 +29,7 @@ export class LancamentosValidator {
       this.validateRequiredNumber(value, 'O mês');
       this.validateNumberRange(value as number, 'O mês', 1, 12);
     } else if (value !== undefined && value !== null) {
-      this.validateRequiredNumber(value, 'O mês');
+      this.validateOptionalNumber(value, 'O mês');
       this.validateNumberRange(value as number, 'O mês', 1, 12);
     }
   }
@@ -109,7 +42,7 @@ export class LancamentosValidator {
       this.validateRequiredNumber(value, 'A quantidade');
       this.validatePositiveNumber(value as number, 'A quantidade');
     } else if (value !== undefined && value !== null) {
-      this.validateRequiredNumber(value, 'A quantidade');
+      this.validateOptionalNumber(value, 'A quantidade');
       this.validatePositiveNumber(value as number, 'A quantidade');
     }
   }
@@ -122,7 +55,7 @@ export class LancamentosValidator {
       this.validateRequiredNumber(value, 'O valor');
       this.validatePositiveNumber(value as number, 'O valor');
     } else if (value !== undefined && value !== null) {
-      this.validateRequiredNumber(value, 'O valor');
+      this.validateOptionalNumber(value, 'O valor');
       this.validatePositiveNumber(value as number, 'O valor');
     }
   }
@@ -134,7 +67,7 @@ export class LancamentosValidator {
     if (!isUpdate) {
       this.validateRequiredString(value, 'O nome do produto', 1);
     } else if (value !== undefined && value !== null) {
-      this.validateRequiredString(value, 'O nome do produto', 1);
+      this.validateOptionalString(value, 'O nome do produto', 1);
     }
   }
 
@@ -149,12 +82,12 @@ export class LancamentosValidator {
     if (!isUpdate) {
       this.validateRequiredString(value, fieldName, 1);
     } else if (value !== undefined && value !== null) {
-      this.validateRequiredString(value, fieldName, 1);
+      this.validateOptionalString(value, fieldName, 1);
     }
   }
 
   /**
-   * Valida todos os dados (create)
+   * Valida todos os dados (create/update)
    */
   static validateAll(
     data: CreateLancamentoDTO | UpdateLancamentoDTO,
@@ -214,32 +147,21 @@ export class LancamentosValidator {
 
 /**
  * Validador de filtros de Lançamentos
- * Não lança exceção, apenas valida valores
  */
-export class LancamentosFilterValidator {
+export class LancamentosFilterValidator extends BaseValidator {
   static validateFilters(filters: LancamentoFilters): void {
     if (filters.ano !== undefined) {
-      if (typeof filters.ano !== 'number' || isNaN(filters.ano)) {
-        throw new BadRequestException('O ano deve ser um número válido');
-      }
-      if (filters.ano < 1900 || filters.ano > 2100) {
-        throw new BadRequestException('O ano deve estar entre 1900 e 2100');
-      }
+      this.validateOptionalNumber(filters.ano, 'O ano');
+      this.validateNumberRange(filters.ano as number, 'O ano', 1900, 2100);
     }
 
     if (filters.mes !== undefined) {
-      if (typeof filters.mes !== 'number' || isNaN(filters.mes)) {
-        throw new BadRequestException('O mês deve ser um número válido');
-      }
-      if (filters.mes < 1 || filters.mes > 12) {
-        throw new BadRequestException('O mês deve estar entre 1 e 12');
-      }
+      this.validateOptionalNumber(filters.mes, 'O mês');
+      this.validateNumberRange(filters.mes as number, 'O mês', 1, 12);
     }
 
     if (filters._order !== undefined) {
-      if (filters._order !== 'asc' && filters._order !== 'desc') {
-        throw new BadRequestException('A ordem deve ser "asc" ou "desc"');
-      }
+      this.validateEnum(filters._order, 'A ordem', ['asc', 'desc'], true);
     }
   }
 }

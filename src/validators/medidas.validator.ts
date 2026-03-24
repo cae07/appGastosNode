@@ -1,34 +1,33 @@
-export class MedidasValidator {
+import { BaseValidator } from './base.validator.js';
+
+/**
+ * Validador de Medidas
+ * Retorna { isValid, errors } em vez de lançar exceções
+ * Permite acumular múltiplos erros antes de retornar
+ */
+export class MedidasValidator extends BaseValidator {
   static validarCriacao(dados: any): { isValid: boolean; errors: Record<string, string[]> } {
     const errors: Record<string, string[]> = {};
 
     // Validar nome
-    if (dados.nome === undefined || dados.nome === null) {
-      errors.nome = ['O nome da medida é obrigatório'];
-    } else if (typeof dados.nome !== 'string') {
-      errors.nome = ['O nome deve ser uma string'];
-    } else if (dados.nome.trim().length === 0) {
-      errors.nome = ['O nome da medida não pode estar vazio'];
-    } else if (dados.nome.trim().length < 1) {
-      errors.nome = ['O nome deve ter pelo menos 1 caractere'];
+    try {
+      this.validateRequiredString(dados.nome, 'O nome da medida', 1);
+    } catch (error: any) {
+      errors.nome = [error.message];
     }
 
     // Validar sigla
-    if (dados.sigla === undefined || dados.sigla === null) {
-      errors.sigla = ['A sigla da medida é obrigatória'];
-    } else if (typeof dados.sigla !== 'string') {
-      errors.sigla = ['A sigla deve ser uma string'];
-    } else if (dados.sigla.trim().length === 0) {
-      errors.sigla = ['A sigla da medida não pode estar vazia'];
-    } else if (dados.sigla.trim().length < 1) {
-      errors.sigla = ['A sigla deve ter pelo menos 1 caractere'];
+    try {
+      this.validateRequiredString(dados.sigla, 'A sigla da medida', 1);
+    } catch (error: any) {
+      errors.sigla = [error.message];
     }
 
     // Validar ativa
-    if (dados.ativa === undefined || dados.ativa === null) {
-      errors.ativa = ['O status ativa é obrigatório'];
-    } else if (typeof dados.ativa !== 'boolean') {
-      errors.ativa = ['O status ativa deve ser um booleano'];
+    try {
+      this.validateRequiredBoolean(dados.ativa, 'O status ativa');
+    } catch (error: any) {
+      errors.ativa = [error.message];
     }
 
     return {
@@ -42,30 +41,28 @@ export class MedidasValidator {
 
     // Validar nome (opcional em UPDATE)
     if (dados.nome !== undefined && dados.nome !== null) {
-      if (typeof dados.nome !== 'string') {
-        errors.nome = ['O nome deve ser uma string'];
-      } else if (dados.nome.trim().length === 0) {
-        errors.nome = ['O nome da medida não pode estar vazio'];
-      } else if (dados.nome.trim().length < 1) {
-        errors.nome = ['O nome deve ter pelo menos 1 caractere'];
+      try {
+        this.validateRequiredString(dados.nome, 'O nome da medida', 1);
+      } catch (error: any) {
+        errors.nome = [error.message];
       }
     }
 
     // Validar sigla (opcional em UPDATE)
     if (dados.sigla !== undefined && dados.sigla !== null) {
-      if (typeof dados.sigla !== 'string') {
-        errors.sigla = ['A sigla deve ser uma string'];
-      } else if (dados.sigla.trim().length === 0) {
-        errors.sigla = ['A sigla da medida não pode estar vazia'];
-      } else if (dados.sigla.trim().length < 1) {
-        errors.sigla = ['A sigla deve ter pelo menos 1 caractere'];
+      try {
+        this.validateRequiredString(dados.sigla, 'A sigla da medida', 1);
+      } catch (error: any) {
+        errors.sigla = [error.message];
       }
     }
 
     // Validar ativa (opcional em UPDATE)
     if (dados.ativa !== undefined && dados.ativa !== null) {
-      if (typeof dados.ativa !== 'boolean') {
-        errors.ativa = ['O status ativa deve ser um booleano'];
+      try {
+        this.validateOptionalBoolean(dados.ativa, 'O status ativa');
+      } catch (error: any) {
+        errors.ativa = [error.message];
       }
     }
 
@@ -80,8 +77,10 @@ export class MedidasValidator {
 
     // Validar ativa (opcional)
     if (filtros.ativa !== undefined && filtros.ativa !== null) {
-      if (typeof filtros.ativa !== 'boolean') {
-        errors.ativa = ['O parâmetro ativa deve ser um booleano'];
+      try {
+        this.validateOptionalBoolean(filtros.ativa, 'O parâmetro ativa');
+      } catch (error: any) {
+        errors.ativa = [error.message];
       }
     }
 

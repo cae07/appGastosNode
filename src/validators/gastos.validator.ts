@@ -1,104 +1,12 @@
-import { BadRequestException } from '../utils/errorHandler.js';
+import { BaseValidator } from './base.validator.js';
 import { CreateGastoDTO, UpdateGastoDTO } from '../types/gastos.types.js';
 
 /**
- * Validador de Gastos com regras complexas
+ * Validador de Gastos
+ * Herda métodos genéricos de BaseValidator
  * Diferencia entre criação (campos obrigatórios) e atualização (campos opcionais)
  */
-export class GastosValidator {
-  /**
-   * Valida string obrigatória
-   */
-  private static validateRequiredString(
-    value: unknown,
-    fieldName: string,
-    minLength: number,
-    maxLength: number
-  ): void {
-    if (value === undefined || value === null || value === '') {
-      throw new BadRequestException(`${fieldName} é obrigatório`);
-    }
-
-    if (typeof value !== 'string') {
-      throw new BadRequestException(`${fieldName} deve ser uma string`);
-    }
-
-    const trimmed = value.trim();
-    if (trimmed === '') {
-      throw new BadRequestException(`${fieldName} não pode estar vazio`);
-    }
-
-    if (trimmed.length < minLength) {
-      throw new BadRequestException(
-        `${fieldName} deve ter no mínimo ${minLength} caracteres`
-      );
-    }
-
-    if (trimmed.length > maxLength) {
-      throw new BadRequestException(
-        `${fieldName} não pode ter mais de ${maxLength} caracteres`
-      );
-    }
-  }
-
-  /**
-   * Valida número obrigatório
-   */
-  private static validateRequiredNumber(value: unknown, fieldName: string): void {
-    if (value === undefined || value === null) {
-      throw new BadRequestException(`${fieldName} é obrigatório`);
-    }
-
-    if (typeof value !== 'number' || isNaN(value)) {
-      throw new BadRequestException(`${fieldName} deve ser um número`);
-    }
-  }
-
-  /**
-   * Valida número positivo
-   */
-  private static validatePositiveNumber(
-    value: number,
-    fieldName: string
-  ): void {
-    if (value <= 0) {
-      throw new BadRequestException(`${fieldName} deve ser maior que zero`);
-    }
-  }
-
-  /**
-   * Valida casas decimais
-   */
-  private static validateDecimalPlaces(
-    value: number,
-    fieldName: string,
-    decimalPlaces: number
-  ): void {
-    const regex = new RegExp(`^\\d+(\\.\\d{1,${decimalPlaces}})?$`);
-    if (!regex.test(value.toString())) {
-      throw new BadRequestException(
-        `${fieldName} deve ter no máximo ${decimalPlaces} casas decimais`
-      );
-    }
-  }
-
-  /**
-   * Valida MongoDB ObjectId
-   */
-  private static validateObjectId(value: unknown, fieldName: string): void {
-    if (value === undefined || value === null || value === '') {
-      throw new BadRequestException(`${fieldName} é obrigatório`);
-    }
-
-    if (typeof value !== 'string') {
-      throw new BadRequestException(`${fieldName} deve ser uma string`);
-    }
-
-    // Validar formato de ObjectId (24 caracteres hexadecimais)
-    if (!/^[0-9a-fA-F]{24}$/.test(value)) {
-      throw new BadRequestException(`${fieldName} deve ser um ID válido`);
-    }
-  }
+export class GastosValidator extends BaseValidator {
 
   /**
    * Valida descrição
@@ -107,7 +15,7 @@ export class GastosValidator {
     if (!isUpdate) {
       this.validateRequiredString(value, 'A descrição', 3, 255);
     } else if (value !== undefined && value !== null) {
-      this.validateRequiredString(value, 'A descrição', 3, 255);
+      this.validateOptionalString(value, 'A descrição', 3, 255);
     }
   }
 
@@ -120,7 +28,7 @@ export class GastosValidator {
       this.validatePositiveNumber(value as number, 'O valor');
       this.validateDecimalPlaces(value as number, 'O valor', 2);
     } else if (value !== undefined && value !== null) {
-      this.validateRequiredNumber(value, 'O valor');
+      this.validateOptionalNumber(value, 'O valor');
       this.validatePositiveNumber(value as number, 'O valor');
       this.validateDecimalPlaces(value as number, 'O valor', 2);
     }
@@ -133,7 +41,7 @@ export class GastosValidator {
     if (!isUpdate) {
       this.validateObjectId(value, 'O tipo de gasto');
     } else if (value !== undefined && value !== null) {
-      this.validateObjectId(value, 'O tipo de gasto');
+      this.validateOptionalObjectId(value, 'O tipo de gasto');
     }
   }
 
@@ -146,12 +54,8 @@ export class GastosValidator {
     }
 
     if (value !== undefined && value !== null) {
-      if (typeof value !== 'number' || isNaN(value)) {
-        throw new BadRequestException('O ano deve ser um número');
-      }
-      if (value < 1900 || value > 2100) {
-        throw new BadRequestException('O ano deve estar entre 1900 e 2100');
-      }
+      this.validateOptionalNumber(value, 'O ano');
+      this.validateNumberRange(value as number, 'O ano', 1900, 2100);
     }
   }
 
@@ -164,17 +68,13 @@ export class GastosValidator {
     }
 
     if (value !== undefined && value !== null) {
-      if (typeof value !== 'number' || isNaN(value)) {
-        throw new BadRequestException('O mês deve ser um número');
-      }
-      if (value < 1 || value > 12) {
-        throw new BadRequestException('O mês deve estar entre 1 e 12');
-      }
+      this.validateOptionalNumber(value, 'O mês');
+      this.validateNumberRange(value as number, 'O mês', 1, 12);
     }
   }
 
   /**
-   * Valida todos os dados (create)
+   * Valida todos os dados (create/update)
    */
   static validateAll(data: CreateGastoDTO | UpdateGastoDTO, isUpdate: boolean = false): void {
     if (isUpdate) {
