@@ -1,5 +1,3 @@
-import { CreateMedidaDTO, UpdateMedidaDTO, MedidaFilters } from '../types/medidas.types';
-
 export class MedidasValidator {
   static validarCriacao(dados: any): { isValid: boolean; errors: Record<string, string[]> } {
     const errors: Record<string, string[]> = {};

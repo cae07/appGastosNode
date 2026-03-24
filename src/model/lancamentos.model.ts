@@ -1,5 +1,5 @@
 import mongoose, { Schema, Model } from 'mongoose';
-import { ILancamento } from '../types/lancamentos.types';
+import { ILancamento } from '../types/lancamentos.types.js';
 
 // Schema do Lançamento
 const lancamentoSchema = new Schema<ILancamento>(

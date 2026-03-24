@@ -2,7 +2,7 @@ import {
   CreateTiposDeGastosDTO,
   UpdateTiposDeGastosDTO,
   TiposDeGastosFilters,
-} from '../types/tiposDeGastos.types';
+} from '../types/tiposDeGastos.types.js';
 
 export class TiposDeGastosValidator {
   static validarCriacao(data: CreateTiposDeGastosDTO): void {

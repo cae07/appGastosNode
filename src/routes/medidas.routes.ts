@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { MedidaController } from '../controller/medidas.controller';
+import { MedidaController } from '../controller/medidas.controller.js';
 
 const medidasRoutes = Router();
 

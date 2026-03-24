@@ -1,8 +1,8 @@
-import MedidaModel from '../model/medidas.model';
-import { CreateMedidaDTO, UpdateMedidaDTO, IMedida, MedidaFilters } from '../types/medidas.types';
-import { MedidasValidator } from '../validators/medidas.validator';
-import { BadRequestException, NotFoundException, InternalServerException } from '../utils/errorHandler';
-import { medidaToClient, medidasToClientArray } from '../utils/toClient';
+import MedidaModel from '../model/medidas.model.js';
+import { CreateMedidaDTO, UpdateMedidaDTO, MedidaFilters } from '../types/medidas.types.js';
+import { MedidasValidator } from '../validators/medidas.validator.js';
+import { BadRequestException, NotFoundException, InternalServerException } from '../utils/errorHandler.js';
+import { toClient, toClientArray } from '../utils/toClient.js';
 
 export class MedidaService {
   static async listar(filters?: MedidaFilters): Promise<any[]> {
@@ -14,7 +14,7 @@ export class MedidaService {
       }
 
       const medidas = await query.exec();
-      return medidasToClientArray(medidas);
+      return toClientArray(medidas);
     } catch (error) {
       throw new InternalServerException('Erro ao buscar medidas');
     }
@@ -32,7 +32,7 @@ export class MedidaService {
         throw new NotFoundException('Medida não encontrada');
       }
 
-      return medidaToClient(medida);
+      return toClient(medida);
     } catch (error) {
       if (error instanceof BadRequestException || error instanceof NotFoundException) {
         throw error;
@@ -62,7 +62,7 @@ export class MedidaService {
       }
 
       const medida = await MedidaModel.create(dados);
-      return medidaToClient(medida.toObject());
+      return toClient(medida.toObject());
     } catch (error) {
       if (error instanceof BadRequestException) {
         throw error;
@@ -114,7 +114,7 @@ export class MedidaService {
         throw new NotFoundException('Medida não encontrada');
       }
 
-      return medidaToClient(medidaAtualizada.toObject());
+      return toClient(medidaAtualizada.toObject());
     } catch (error) {
       if (error instanceof BadRequestException || error instanceof NotFoundException) {
         throw error;
@@ -135,7 +135,7 @@ export class MedidaService {
         throw new NotFoundException('Medida não encontrada');
       }
 
-      return medidaToClient(medida.toObject());
+      return toClient(medida.toObject());
     } catch (error) {
       if (error instanceof BadRequestException || error instanceof NotFoundException) {
         throw error;

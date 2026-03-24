@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { TiposProdutoService } from '../services/tiposProduto.service';
-import { handleError } from '../utils/errorHandler';
+import { TiposProdutoService } from '../services/tiposProduto.service.js';
+import { handleError } from '../utils/errorHandler.js';
 
 export class TiposProdutoController {
   static async listar(req: Request, res: Response) {

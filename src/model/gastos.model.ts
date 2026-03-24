@@ -1,5 +1,5 @@
 import mongoose, { Schema, Model } from 'mongoose';
-import { IGasto } from '../types/gastos.types';
+import { IGasto } from '../types/gastos.types.js';
 
 // Schema do Gasto
 const gastoSchema = new Schema<IGasto>(

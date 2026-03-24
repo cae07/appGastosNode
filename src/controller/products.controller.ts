@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { ProductService } from '../services/products.service';
-import { handleError } from '../utils/errorHandler';
+import { ProductService } from '../services/products.service.js';
+import { handleError } from '../utils/errorHandler.js';
 
 export class ProductController {
   static async listar(req: Request, res: Response): Promise<void> {

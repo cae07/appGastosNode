@@ -1,12 +1,12 @@
-import { BadRequestException, NotFoundException } from '../utils/errorHandler';
-import { TiposProdutoModel } from '../model/tiposProduto.model';
-import { TiposProdutoValidator } from '../validators/tiposProduto.validator';
+import { BadRequestException, NotFoundException } from '../utils/errorHandler.js';
+import { TiposProdutoModel } from '../model/tiposProduto.model.js';
+import { TiposProdutoValidator } from '../validators/tiposProduto.validator.js';
 import {
   CreateTiposProdutoDTO,
   UpdateTiposProdutoDTO,
   TiposProdutoFilters,
-} from '../types/tiposProduto.types';
-import { tiposProdutoToClient } from '../utils/toClient';
+} from '../types/tiposProduto.types.js';
+import { toClient } from '../utils/toClient.js';
 
 export class TiposProdutoService {
   static async listar(filters?: TiposProdutoFilters) {
@@ -22,7 +22,7 @@ export class TiposProdutoService {
       }
 
       const tiposProduto = await TiposProdutoModel.find(query).exec();
-      return tiposProduto.map(tipo => tiposProdutoToClient(tipo));
+      return tiposProduto.map(tipo => toClient(tipo));
     } catch (error) {
       if (error instanceof Error) {
         throw new BadRequestException(error.message);
@@ -43,7 +43,7 @@ export class TiposProdutoService {
         throw new NotFoundException('Tipo de produto não encontrado');
       }
 
-      return tiposProdutoToClient(tiposProduto);
+      return toClient(tiposProduto);
     } catch (error) {
       if (error instanceof BadRequestException || error instanceof NotFoundException) {
         throw error;
@@ -62,7 +62,7 @@ export class TiposProdutoService {
       const novoTiposProduto = new TiposProdutoModel(data);
       const resultado = await novoTiposProduto.save();
 
-      return tiposProdutoToClient(resultado);
+      return toClient(resultado);
     } catch (error) {
       if (error instanceof Error) {
         if (error.message.includes('E11000') || error.message.includes('duplicate')) {
@@ -106,7 +106,7 @@ export class TiposProdutoService {
         throw new NotFoundException('Tipo de produto não encontrado');
       }
 
-      return tiposProdutoToClient(tiposProduto);
+      return toClient(tiposProduto);
     } catch (error) {
       if (error instanceof BadRequestException || error instanceof NotFoundException) {
         throw error;
@@ -130,7 +130,7 @@ export class TiposProdutoService {
         throw new NotFoundException('Tipo de produto não encontrado');
       }
 
-      return tiposProdutoToClient(tiposProduto);
+      return toClient(tiposProduto);
     } catch (error) {
       if (error instanceof BadRequestException || error instanceof NotFoundException) {
         throw error;

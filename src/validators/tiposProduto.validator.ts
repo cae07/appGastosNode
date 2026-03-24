@@ -2,7 +2,7 @@ import {
   CreateTiposProdutoDTO,
   UpdateTiposProdutoDTO,
   TiposProdutoFilters,
-} from '../types/tiposProduto.types';
+} from '../types/tiposProduto.types.js';
 
 export class TiposProdutoValidator {
   static validarCriacao(data: CreateTiposProdutoDTO): void {

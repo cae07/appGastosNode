@@ -1,5 +1,5 @@
-import { BadRequestException } from '../utils/errorHandler';
-import { CreateGastoDTO, UpdateGastoDTO } from '../types/gastos.types';
+import { BadRequestException } from '../utils/errorHandler.js';
+import { CreateGastoDTO, UpdateGastoDTO } from '../types/gastos.types.js';
 
 /**
  * Validador de Gastos com regras complexas

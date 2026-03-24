@@ -1,12 +1,12 @@
-import { BadRequestException, NotFoundException } from '../utils/errorHandler';
-import { TiposDeGastosModel } from '../model/tiposDeGastos.model';
-import { TiposDeGastosValidator } from '../validators/tiposDeGastos.validator';
+import { BadRequestException, NotFoundException } from '../utils/errorHandler.js';
+import { TiposDeGastosModel } from '../model/tiposDeGastos.model.js';
+import { TiposDeGastosValidator } from '../validators/tiposDeGastos.validator.js';
 import {
   CreateTiposDeGastosDTO,
   UpdateTiposDeGastosDTO,
   TiposDeGastosFilters,
-} from '../types/tiposDeGastos.types';
-import { tiposDeGastosToClient } from '../utils/toClient';
+} from '../types/tiposDeGastos.types.js';
+import { toClient } from '../utils/toClient.js';
 
 export class TiposDeGastosService {
   static async listar(filters?: TiposDeGastosFilters) {
@@ -22,7 +22,7 @@ export class TiposDeGastosService {
       }
 
       const tiposDeGastos = await TiposDeGastosModel.find(query).exec();
-      return tiposDeGastos.map(tiposDeGastos => tiposDeGastosToClient(tiposDeGastos));
+      return tiposDeGastos.map(tiposDeGastos => toClient(tiposDeGastos));
     } catch (error) {
       if (error instanceof Error) {
         throw new BadRequestException(error.message);
@@ -43,7 +43,7 @@ export class TiposDeGastosService {
         throw new NotFoundException('Tipo de Gastos não encontrado');
       }
 
-      return tiposDeGastosToClient(tiposDeGastos);
+      return toClient(tiposDeGastos);
     } catch (error) {
       if (error instanceof BadRequestException || error instanceof NotFoundException) {
         throw error;
@@ -62,7 +62,7 @@ export class TiposDeGastosService {
       const novoTiposDeGastos = new TiposDeGastosModel(data);
       const resultado = await novoTiposDeGastos.save();
 
-      return tiposDeGastosToClient(resultado);
+      return toClient(resultado);
     } catch (error) {
       if (error instanceof Error) {
         if (error.message.includes('E11000') || error.message.includes('duplicate')) {
@@ -106,7 +106,7 @@ export class TiposDeGastosService {
         throw new NotFoundException('Tipo de Gastos não encontrado');
       }
 
-      return tiposDeGastosToClient(tiposDeGastos);
+      return toClient(tiposDeGastos);
     } catch (error) {
       if (error instanceof BadRequestException || error instanceof NotFoundException) {
         throw error;
@@ -130,7 +130,7 @@ export class TiposDeGastosService {
         throw new NotFoundException('Tipo de Gastos não encontrado');
       }
 
-      return tiposDeGastosToClient(tiposDeGastos);
+      return toClient(tiposDeGastos);
     } catch (error) {
       if (error instanceof BadRequestException || error instanceof NotFoundException) {
         throw error;

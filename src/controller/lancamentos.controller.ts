@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import LancamentoService from '../services/lancamentos.service';
-import { handleError } from '../utils/errorHandler';
-import { CreateLancamentoDTO, UpdateLancamentoDTO, LancamentoFilters } from '../types/lancamentos.types';
+import LancamentoService from '../services/lancamentos.service.js';
+import { handleError } from '../utils/errorHandler.js';
+import { CreateLancamentoDTO, UpdateLancamentoDTO, LancamentoFilters } from '../types/lancamentos.types.js';
 
 export class LancamentoController {
   /**

@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import LancamentoController from '../controller/lancamentos.controller';
+import LancamentoController from '../controller/lancamentos.controller.js';
 
 const router = Router();
 

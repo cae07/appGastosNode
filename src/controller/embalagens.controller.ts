@@ -1,10 +1,10 @@
 import { Request, Response } from 'express';
-import EmbalagemService from '../services/embalagens.service';
-import { handleError } from '../utils/errorHandler';
+import EmbalagemService from '../services/embalagens.service.js';
+import { handleError } from '../utils/errorHandler.js';
 import {
   CreateEmbalagemDTO,
   UpdateEmbalagemDTO,
-} from '../types/embalagens.types';
+} from '../types/embalagens.types.js';
 
 export class EmbalagemController {
   /**

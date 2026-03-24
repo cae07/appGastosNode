@@ -1,7 +1,7 @@
 import { Request, Response } from 'express';
-import GastoService from '../services/gastos.service';
-import { handleError } from '../utils/errorHandler';
-import { CreateGastoDTO, UpdateGastoDTO } from '../types/gastos.types';
+import GastoService from '../services/gastos.service.js';
+import { handleError } from '../utils/errorHandler.js';
+import { CreateGastoDTO, UpdateGastoDTO } from '../types/gastos.types.js';
 
 export class GastoController {
   /**

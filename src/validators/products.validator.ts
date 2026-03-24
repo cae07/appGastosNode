@@ -1,5 +1,3 @@
-import { CreateProductDTO, UpdateProductDTO } from '../types/products.types';
-
 export class ProductsValidator {
   static validarCriacao(dados: any): { isValid: boolean; errors: Record<string, string[]> } {
     const errors: Record<string, string[]> = {};

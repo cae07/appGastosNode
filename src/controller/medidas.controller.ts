@@ -1,6 +1,6 @@
 import { Request, Response } from 'express';
-import { MedidaService } from '../services/medidas.service';
-import { handleError } from '../utils/errorHandler';
+import { MedidaService } from '../services/medidas.service.js';
+import { handleError } from '../utils/errorHandler.js';
 
 export class MedidaController {
   static async listar(req: Request, res: Response): Promise<void> {

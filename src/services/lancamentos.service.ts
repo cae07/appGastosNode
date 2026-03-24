@@ -1,16 +1,16 @@
-import LancamentoModel from '../model/lancamentos.model';
+import LancamentoModel from '../model/lancamentos.model.js';
 import {
   CreateLancamentoDTO,
   UpdateLancamentoDTO,
   LancamentoFilters,
-} from '../types/lancamentos.types';
+} from '../types/lancamentos.types.js';
 import {
   NotFoundException,
   BadRequestException,
   InternalServerException,
-} from '../utils/errorHandler';
-import { lancamentoToClient, lancamentosToClientArray } from '../utils/toClient';
-import { LancamentosValidator, LancamentosFilterValidator } from '../validators/lancamentos.validator';
+} from '../utils/errorHandler.js';
+import { toClient, toClientArray } from '../utils/toClient.js';
+import { LancamentosValidator, LancamentosFilterValidator } from '../validators/lancamentos.validator.js';
 
 export class LancamentoService {
   /**
@@ -64,7 +64,7 @@ export class LancamentoService {
       }
 
       const lancamentos = await query.exec();
-      return lancamentosToClientArray(lancamentos);
+      return toClientArray(lancamentos);
     } catch (error) {
       if (error instanceof BadRequestException) {
         throw error;
@@ -95,7 +95,7 @@ export class LancamentoService {
         throw new NotFoundException('Lançamento não encontrado');
       }
 
-      return lancamentoToClient(lancamento)!;
+      return toClient(lancamento)!;
     } catch (error) {
       if (
         error instanceof NotFoundException ||
@@ -120,7 +120,7 @@ export class LancamentoService {
       const lancamento = new LancamentoModel(data);
       await lancamento.save();
 
-      return lancamentoToClient(lancamento)!;
+      return toClient(lancamento)!;
     } catch (error) {
       if (error instanceof BadRequestException) {
         throw error;
@@ -161,7 +161,7 @@ export class LancamentoService {
         throw new NotFoundException('Lançamento não encontrado');
       }
 
-      return lancamentoToClient(lancamento)!;
+      return toClient(lancamento)!;
     } catch (error) {
       if (
         error instanceof NotFoundException ||
@@ -195,7 +195,7 @@ export class LancamentoService {
         throw new NotFoundException('Lançamento não encontrado');
       }
 
-      return lancamentoToClient(lancamento)!;
+      return toClient(lancamento)!;
     } catch (error) {
       if (
         error instanceof NotFoundException ||

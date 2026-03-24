@@ -1,5 +1,5 @@
 import mongoose, { Schema, Model } from 'mongoose';
-import { IEmbalagem } from '../types/embalagens.types';
+import { IEmbalagem } from '../types/embalagens.types.js';
 
 // Schema da Embalagem
 const embalagemSchema = new Schema<IEmbalagem>(

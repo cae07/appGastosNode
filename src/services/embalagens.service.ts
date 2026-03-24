@@ -1,14 +1,14 @@
-import EmbalagemModel from '../model/embalagens.model';
+import EmbalagemModel from '../model/embalagens.model.js';
 import {
   CreateEmbalagemDTO,
   UpdateEmbalagemDTO,
-} from '../types/embalagens.types';
+} from '../types/embalagens.types.js';
 import {
   NotFoundException,
   BadRequestException,
   InternalServerException,
-} from '../utils/errorHandler';
-import { embalagemToClient, embalagenToClientArray } from '../utils/toClient';
+} from '../utils/errorHandler.js';
+import { toClient, toClientArray } from '../utils/toClient.js';
 
 export class EmbalagemService {
   /**
@@ -24,7 +24,7 @@ export class EmbalagemService {
       }
 
       const embalagens = await query.exec();
-      return embalagenToClientArray(embalagens);
+      return toClientArray(embalagens);
     } catch (error) {
       console.error('Erro ao buscar embalagens:', error);
       throw new InternalServerException('Erro ao buscar embalagens');
@@ -50,7 +50,7 @@ export class EmbalagemService {
         );
       }
 
-      return embalagemToClient(embalagem)!;
+      return toClient(embalagem)!;
     } catch (error) {
       if (error instanceof NotFoundException || error instanceof BadRequestException) {
         throw error;
@@ -80,7 +80,7 @@ export class EmbalagemService {
       const embalagem = new EmbalagemModel(data);
       await embalagem.save();
 
-      return embalagemToClient(embalagem)!;
+      return toClient(embalagem)!;
     } catch (error) {
       if (error instanceof BadRequestException) {
         throw error;
@@ -116,7 +116,7 @@ export class EmbalagemService {
         );
       }
 
-      return embalagemToClient(embalagem)!;
+      return toClient(embalagem)!;
     } catch (error) {
       if (error instanceof NotFoundException || error instanceof BadRequestException) {
         throw error;
@@ -147,7 +147,7 @@ export class EmbalagemService {
         );
       }
 
-      return embalagemToClient(embalagem)!;
+      return toClient(embalagem)!;
     } catch (error) {
       if (error instanceof NotFoundException || error instanceof BadRequestException) {
         throw error;

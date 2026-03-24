@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import GastoController from '../controller/gastos.controller';
+import GastoController from '../controller/gastos.controller.js';
 
 const router = Router();
 

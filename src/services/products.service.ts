@@ -1,8 +1,8 @@
-import ProductModel from '../model/products.model';
-import { CreateProductDTO, UpdateProductDTO, IProduct, ProductFilters } from '../types/products.types';
-import { ProductsValidator } from '../validators/products.validator';
-import { BadRequestException, NotFoundException, InternalServerException } from '../utils/errorHandler';
-import { productToClient, productsToClientArray } from '../utils/toClient';
+import ProductModel from '../model/products.model.js';
+import { CreateProductDTO, UpdateProductDTO, ProductFilters } from '../types/products.types.js';
+import { ProductsValidator } from '../validators/products.validator.js';
+import { BadRequestException, NotFoundException, InternalServerException } from '../utils/errorHandler.js';
+import { toClient, toClientArray } from '../utils/toClient.js';
 
 export class ProductService {
   static async listar(filters?: ProductFilters): Promise<any[]> {
@@ -14,7 +14,7 @@ export class ProductService {
       }
 
       const products = await query.exec();
-      return productsToClientArray(products);
+      return toClientArray(products);
     } catch (error) {
       throw new InternalServerException('Erro ao buscar produtos');
     }
@@ -32,7 +32,7 @@ export class ProductService {
         throw new NotFoundException('Produto não encontrado');
       }
 
-      return productToClient(product);
+      return toClient(product);
     } catch (error) {
       if (error instanceof BadRequestException || error instanceof NotFoundException) {
         throw error;
@@ -51,7 +51,7 @@ export class ProductService {
       }
 
       const product = await ProductModel.create(dados);
-      return productToClient(product.toObject());
+      return toClient(product.toObject());
     } catch (error) {
       if (error instanceof BadRequestException) {
         throw error;
@@ -87,7 +87,7 @@ export class ProductService {
         throw new NotFoundException('Produto não encontrado');
       }
 
-      return productToClient(productAtualizado.toObject());
+      return toClient(productAtualizado.toObject());
     } catch (error) {
       if (error instanceof BadRequestException || error instanceof NotFoundException) {
         throw error;
@@ -108,7 +108,7 @@ export class ProductService {
         throw new NotFoundException('Produto não encontrado');
       }
 
-      return productToClient(product.toObject());
+      return toClient(product.toObject());
     } catch (error) {
       if (error instanceof BadRequestException || error instanceof NotFoundException) {
         throw error;

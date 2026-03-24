@@ -1,5 +1,5 @@
 import { VercelRequest, VercelResponse } from '@vercel/node';
-import { app } from '../index';
+import { app } from '../index.js';
 
 /**
  * Handler para Vercel Serverless Functions

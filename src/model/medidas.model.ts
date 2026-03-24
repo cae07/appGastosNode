@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import { IMedida } from '../types/medidas.types';
+import { IMedida } from '../types/medidas.types.js';
 
 const MedidaSchema = new mongoose.Schema<IMedida>(
   {

@@ -1,5 +1,5 @@
-import { BadRequestException } from '../utils/errorHandler';
-import { CreateLancamentoDTO, UpdateLancamentoDTO, LancamentoFilters } from '../types/lancamentos.types';
+import { BadRequestException } from '../utils/errorHandler.js';
+import { CreateLancamentoDTO, UpdateLancamentoDTO, LancamentoFilters } from '../types/lancamentos.types.js';
 
 /**
  * Validador de Lançamentos com regras complexas

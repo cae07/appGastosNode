@@ -1,12 +1,12 @@
-import GastoModel from '../model/gastos.model';
-import { CreateGastoDTO, UpdateGastoDTO } from '../types/gastos.types';
+import GastoModel from '../model/gastos.model.js';
+import { CreateGastoDTO, UpdateGastoDTO } from '../types/gastos.types.js';
 import {
   NotFoundException,
   BadRequestException,
   InternalServerException,
-} from '../utils/errorHandler';
-import { gastoToClient, gastosToClientArray } from '../utils/toClient';
-import { GastosValidator } from '../validators/gastos.validator';
+} from '../utils/errorHandler.js';
+import { toClient, toClientArray } from '../utils/toClient.js';
+import { GastosValidator } from '../validators/gastos.validator.js';
 
 export class GastoService {
   /**
@@ -27,7 +27,7 @@ export class GastoService {
       }
 
       const gastos = await query.exec();
-      return gastosToClientArray(gastos);
+      return toClientArray(gastos);
     } catch (error) {
       console.error('Erro ao buscar gastos:', error);
       throw new InternalServerException('Erro ao buscar Gastos');
@@ -55,7 +55,7 @@ export class GastoService {
         throw new NotFoundException('Gasto não encontrado');
       }
 
-      return gastoToClient(gasto)!;
+      return toClient(gasto)!;
     } catch (error) {
       if (
         error instanceof NotFoundException ||
@@ -80,7 +80,7 @@ export class GastoService {
       const gasto = new GastoModel(data);
       await gasto.save();
 
-      return gastoToClient(gasto)!;
+      return toClient(gasto)!;
     } catch (error) {
       if (error instanceof BadRequestException) {
         throw error;
@@ -121,7 +121,7 @@ export class GastoService {
         throw new NotFoundException('Gasto não encontrado para atualização');
       }
 
-      return gastoToClient(gasto)!;
+      return toClient(gasto)!;
     } catch (error) {
       if (
         error instanceof NotFoundException ||
@@ -155,7 +155,7 @@ export class GastoService {
         throw new NotFoundException('Gasto não encontrado para exclusão');
       }
 
-      return gastoToClient(gasto)!;
+      return toClient(gasto)!;
     } catch (error) {
       if (
         error instanceof NotFoundException ||
